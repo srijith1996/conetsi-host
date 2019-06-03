@@ -1,0 +1,17 @@
+CC = gcc
+CFLAGS = -Wextra -Wall
+CXXFLAGS = -g 
+LDFLAGS = -lpthread -lcurl -lm
+
+INC = -I$(HOST_DIR)/include
+
+LD_LIBRARY_PATH = /usr/local/lib
+
+UTIL_DIR = $(HOST_DIR)/lib
+OBJ_DIR = ./obj_$(PROJ)
+
+obj_dir:
+	mkdir -p $(OBJ_DIR)
+
+clean: 
+	rm -rf *.o $(OUT_FILE) $(OBJ_DIR)
