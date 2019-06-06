@@ -69,8 +69,14 @@ proc_nms_input(char *nms_buf, int size)
   printf("Packet size: %d\n", size);
   printf("Number of hops: %d\n", num_hops);
   
+  int read_size = 2;
+  int num_entries = 0;
   /* process NMS input data */
   for(i = 0; i < num_hops; i++) {
+
+    if(read_size >= size) {
+      break;
+    }
     printf("\t* Node: ");
     PRINT_LLADDR(node->lladdr);
     printf("\n\t* Size: %d\n", node->len);
@@ -90,9 +96,13 @@ proc_nms_input(char *nms_buf, int size)
       nsi = (void *)nsi + j;
     }
 
+    read_size += CONF_LLADDR_SIZE + 1 + node->len;
+    num_entries++;
     node = (void *)node + CONF_LLADDR_SIZE + 1 + node->len;
     printf("\n\n");
   }
+
+  printf("Number of Entries: %d\n\n\n", num_entries);
 
 
 #if 0
